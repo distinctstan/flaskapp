@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlaskApp - Home</title>
+    {# <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css"> #}
+    <link rel="stylesheet" href="{{ url_for('static',filename='bootstrap/css/bootstrap.css') }}">
+</head>
+<body class="bg-secondary">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="border-bottom col-12 d-flex flex-column justify-content-center align-items-center">
+                <h1 class="p-4 text-light">Welcome to Flask App</h1>
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12 d-flex flex-column justify-content-center align-items-center">
+                <h2 class="text-warning">User Details</h2>
+                <form method="post" class="w-50 p-5 bg-white" novalidate>
+                    {{ userform.csrf_token }}
+                    <div class="mb-3">
+                        {{ userform.surname.label(class_='form-label') }} <br>
+                        {{ userform.surname(class_='form-control',placeholder='Please enter your surname') }}
+                        {% if userform.surname.errors %}
+                            {% for error in userform.surname.errors %}
+                                <small class="text-danger">{{ error }}</small>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        {{ userform.firstname.label(class_='form-label') }} <br>
+                        {{ userform.firstname(class_='form-control',placeholder='Please enter your firstname') }}
+                        {% if userform.firstname.errors %}
+                            {% for error in userform.firstname.errors %}
+                                <small class="text-danger">{{ error }}</small>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        {{ userform.email.label(class_='form-label') }} <br>
+                        {{ userform.email(class_='form-control',placeholder='Please enter your email') }}
+                        {% if userform.email.errors %}
+                            {% for error in userform.email.errors %}
+                                <small class="text-danger">{{ error }}</small>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        {{ userform.password.label(class_='form-label') }} <br>
+                        {{ userform.password(class_='form-control',placeholder='Please enter your password') }}
+                        {% if userform.password.errors %}
+                            {% for error in userform.password.errors %}
+                                <small class="text-danger">{{ error }}</small>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        {{ userform.repeat_password.label(class_='form-label') }} <br>
+                        {{ userform.repeat_password(class_='form-control',placeholder='Please type your password again') }}
+                        {% if userform.repeat_password.errors %}
+                            {% for error in userform.repeat_password.errors %}
+                                <small class="text-danger">{{ error }}</small>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        {{ userform.bio.label(class_='form-label') }} <br>
+                        {{ userform.bio(class_='form-control',placeholder='Please enter your bio',rows='5') }}
+                    </div>
+                    <div class="mb-3">
+                        {{ userform.agree(class_='form-check-input') }} 
+                        {{ userform.agree.label(class_='form-label') }} <br>
+                        {% if userform.agree.errors %}
+                            {% for error in userform.agree.errors %}
+                                <small class="text-danger">{{ error }}</small>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        {{ userform.submit(class_='btn btn-warning col-12') }} 
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

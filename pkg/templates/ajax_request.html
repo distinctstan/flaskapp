@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlaskApp - Home</title>
+    {# <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css"> #}
+    <link rel="stylesheet" href="{{ url_for('static',filename='bootstrap/css/bootstrap.css') }}">
+</head>
+<body class="bg-secondary">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="border-bottom p-5 col-12 d-flex flex-column justify-content-center align-items-center">
+                <h1 class="p-4 text-light">Welcome to Flask App</h1>
+                <form class="bg-light p-4 w-50 mb-0 rounded-3">
+                    <input class="form-control" type="search" id="search" placeholder="Search for our customers">
+                </form>
+                <div class="w-50 rounded-3" id="search_results"></div>
+                <br>
+                <form class="bg-light p-4 w-50 mb-0 rounded-3">
+                    <button class="btn btn-danger col-12" type="button" id="image">Search for Image</button>
+                </form>
+                <div class="w-50 rounded-3 d-flex justify-content-center" id="image_results"></div>
+                <br>
+                <form class="bg-light p-4 w-50 mb-0 rounded-3">
+                    <label for="">Select your state</label><br>
+                    <select class="form-select" name="state" id="state">
+                        <option>.......</option>
+                        <option value="1">Lagos</option>
+                        <option value="2">Abuja</option>
+                    </select>
+                    <br>
+                    <label for="">Select your Lga</label><br>
+                    <select class="form-select" name="lgas" id="lgas">
+                    </select>
+                </form>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12 d-flex flex-column justify-content-center align-items-center">
+                <h2 class="text-info">Ajax Request</h2>
+                <div class="bg-light p-4 w-50 mb-5 rounded-3">
+                    <form id="register_form">
+                        <!-- <p id="error_feedback" class="alert alert-danger"></p> -->
+                        <h3 class="mb-3 text-secondary">Registration Form</h3>
+                        <div class="mb-3">
+                            <input class="form-control border border-5" type="text" name="username" id="username" placeholder="Enter your username">
+                            <span id="username_error" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <input class="form-control border border-5" type="password" name="password" id="password" placeholder="Type your password">
+                        </div>
+                        <div class="mb-3">
+                            <span>Choose highest level of education</span><br>
+                            <input class="form-check-input border border-5" type="radio" name="edu" id="edu_bsc" value="bsc"> B.Sc <br>
+                            <input class="form-check-input border border-5" type="radio" name="edu" id="edu_msc" value="msc"> M.Sc <br>
+                        </div>
+                        <div class="mb-3">
+                            <label for="">Upload a photo passport</label><br>
+                            <input class="form-control border border-5" type="file" name="photo" id="photo">
+                        </div>
+                        <div class="mb-3">
+                            <button id="register_btn" class="btn btn-danger col-12" type="button">Register</button>
+                        </div>
+                    </form>
+                    <br>
+                    <table class="table table-hover table-striped">
+                        <tr>
+                            <th>Username</th>
+                            <th>Password</th>
+                        </tr>
+                        <tr>
+                            <td id="username_box"></td>
+                            <td id="password_box"></td>
+                        </tr>
+                    </table>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static',filename='jquery-3.7.1.min.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            $('#register_btn').click(function(){
+                // var username = $('#username').val()
+                // var password = $('#password').val()
+                // var data2send = "username="+username+"&password="+password+"&csrf_token={{ csrf_token() }}"
+                // var data2send = {username:username,password:password}
+                // var data2send = {username:username,password:password,csrf_token:"{{ csrf_token() }}"}
+                var registerform = document.getElementById('register_form')
+                var formdata = new FormData(registerform)
+                formdata.append('role','manager')
+                formdata.append('csrf_token','{{ csrf_token() }}')
+                $.ajax({
+                    url:"/ajax/response/",
+                    type:'POST',
+                    dataType:'json',
+                    // data:$('#register_form').serialize(),
+                    cache:false,
+                    processData:false,
+                    contentType:false,
+                    data:formdata,
+                    success:function(res){
+                        $('#username_error').text(res)
+                        $('#username_box').text(res.username)
+                        $('#password_box').text(res.password)
+                    },
+                })
+            })
+
+
+            // Search functionality
+            $('#search_results').hide()
+            $('#search').keyup(function(){
+                var searchData = $(this).val()
+                $.ajax({
+                    url:'/search/',
+                    type:'GET',
+                    dataType:'text',
+                    data:"search="+searchData,
+                    success:function(res){
+                        $('#search_results').show().html(res)
+                    }
+                })
+            })
+
+
+            // Image search functionality
+            $('#image_results').hide()
+            $('#image').click(function(){
+                $.ajax({
+                    url:'/image/search/',
+                    type:'GET',
+                    dataType:'text',
+                    beforeSend:function(){
+                        $('#image_results').show().css({
+                            'background-image':'url("/assets/images/loading.gif")',
+                            'background-size':'100px 100px',
+                            'background-repeat':'no-repeat',
+                            'background-position':'center center'
+                        })
+                    },
+                    success:function(res){
+                        $('#image_results').show().html(res)
+                    }
+                })
+            })
+
+            $('#state').change(function(){
+                var state_id = $(this).val()
+                $.ajax({
+                    url:'/get/lgas/',
+                    type:'GET',
+                    dataType:'text',
+                    data:"state_id="+state_id,
+                    success:function(res){
+                        $('#lgas').html(res)
+                    }
+                })
+            })
+        })
+    </script>
+</body>
+</html>

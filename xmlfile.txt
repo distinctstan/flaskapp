@@ -1,0 +1,4 @@
+<gadgets>
+    <phone shape="rounded">Tecno Spark 10</phone>
+    <laptop screen="15 inches HD">HP ProBook 4430</laptop>
+</gadgets>

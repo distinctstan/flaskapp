@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlaskApp - Home</title>
+    {# <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css"> #}
+    <link rel="stylesheet" href="{{ url_for('static',filename='bootstrap/css/bootstrap.css') }}">
+</head>
+<body class="bg-secondary">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="border-bottom col-12 d-flex flex-column justify-content-center align-items-center">
+                <h1 class="p-4 text-light">Welcome to Flask App</h1>
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12 d-flex flex-column justify-content-center align-items-center">
+                <h2 class="text-light">ORM Fetch</h2>
+                <p class="alert alert-info d-inline w-25">
+                    {{ customer.cust_id }}<br>
+                    {{ customer.cust_name }}<br>
+                    {{ customer.cust_email }}<br>
+                    {{ customer.cust_phone }}<br>
+                    {{ customer.cust_datereg }}<br>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

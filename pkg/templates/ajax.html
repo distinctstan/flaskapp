@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlaskApp - Home</title>
+    {# <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css"> #}
+    <link rel="stylesheet" href="{{ url_for('static',filename='bootstrap/css/bootstrap.css') }}">
+</head>
+<body class="bg-secondary">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="border-bottom col-12 d-flex flex-column justify-content-center align-items-center">
+                <h1 class="p-4 text-light">Welcome to Flask App</h1>
+                <p>
+                </p>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12 d-flex flex-column justify-content-center align-items-center">
+                <h2 class="text-info">Ajax</h2>
+                <p id="display" class="text-light"></p>
+                <button type="button" id="send" class="btn btn-info">Send</button>
+                <br>
+                <div class="bg-light p-4 w-50 mb-5 rounded-3">
+                    <h3>SignUp Form</h3><br>
+                    <input class="form-control" type="text" id="username" placeholder="Username"><br>
+                    <input class="form-control" type="email" id="email" placeholder="Email">
+                    <span id="error" style="color:red;"></span><br>
+                    <button id="login" type="button" class="btn btn-warning col-12">Sign Up</button>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static',filename='jquery-3.7.1.min.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            // $('#send').click(function(){
+            //     url = '/load-data/'
+            //     // data = "firstname=Mark&age=25" 
+            //     csrf = "{{ csrf_token() }}"
+            //     data = {firstname:'Smith',age:34,csrf_token:csrf}
+            //     $('#display').load(url,data)
+            // })
+
+            $('#login').click(function(){
+                username = $('#username').val()
+                email = $('#email').val()
+                data = {username:username,email:email,csrf_token:"{{ csrf_token() }}"}
+                $('#error').load('/load-data/',data)
+            })
+
+            // $('#send').click(function(){
+            //     url = '/load-data/'
+            //     // data = "firstname=Mark&age=25" 
+            //     csrf = "{{ csrf_token() }}"
+            //     data = {firstname:'Smith',age:34,csrf_token:csrf}
+            //     $.get(url,data,function(resp){
+            //         $('#display').text(resp)
+            //     })
+            // })
+
+            $('#send').click(function(){
+                url = '/load-data/'
+                csrf = "{{ csrf_token() }}"
+                data = "firstname=Mark&age=25&csrf_token="+csrf
+                // csrf = "{{ csrf_token() }}"
+                // data = {firstname:'Smith',age:34,csrf_token:csrf}
+                $.post(url,data,function(resp){
+                    $('#display').text(resp)
+                })
+            })
+        })
+    </script>
+</body>
+</html>

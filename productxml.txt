@@ -1,0 +1,10 @@
+<product version="covid-19 special">
+    <title>SuperStore</title>
+    <store>
+        <opebi>24</opebi>
+        <lekki>56</lekki>
+    </store>
+    <prodname desc="An all-day perfume for al fashionista">
+        Moringha Perfume Spray
+    </prodname>
+</product>

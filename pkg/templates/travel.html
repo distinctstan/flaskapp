@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlaskApp - Home</title>
+    {# <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css"> #}
+    <link rel="stylesheet" href="{{ url_for('static',filename='bootstrap/css/bootstrap.css') }}">
+</head>
+<body class="bg-secondary">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="border-bottom col-12 d-flex justify-content-center align-items-center">
+                <h1 class="p-4 text-light">Welcome to Flask App</h1>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12 d-flex flex-column justify-content-center align-items-center">
+                <h2>Choose your destination</h2>
+                <form action="" method="post" class="bg-light p-4">
+                    <label for="" class="form-select-label">Continent</label>
+                    <select name="continent" class="form-select">
+                        <option value="">Select continent</option>
+                        <option value="africa">Africa</option>
+                        <option value="europe">Europe</option>
+                        <option value="america">America</option>
+                    </select>
+                    <br>
+                    <button class="btn btn-danger col-12">Continue</button>
+                </form>
+                <div class="mt-3">
+                    {% if continent %}
+                        <h3 class="text-warning">Essential items for trip to "{{ continent }}"</h3>
+                    {% endif %}
+
+                    {% if continent=='africa' %}
+                        <ul class="text-light">
+                            <li>Drink a lot of water</li>
+                            <li>The weather there is too hot</li>
+                        </ul>
+                    {% elif continent=='europe' %}
+                        <ul class="text-light">
+                            <li>Take a strong jacket</li>
+                            <li>The cold there is massive</li>
+                        </ul>
+                    {% elif continent=='america' %}
+                        <ul class="text-light">
+                            <li>Hope you like pizza</li>
+                            <li>And a lot of beer</li>
+                        </ul>
+                    {% else %}
+                        <p class="text-light">You did not select any continent</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

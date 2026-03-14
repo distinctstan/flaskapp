@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlaskApp - Home</title>
+    {# <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css"> #}
+    <link rel="stylesheet" href="{{ url_for('static',filename='bootstrap/css/bootstrap.css') }}">
+</head>
+<body class="bg-secondary">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="border-bottom col-12 d-flex justify-content-center align-items-center">
+                <h1 class="p-4 text-light">Welcome to Flask App</h1>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12 d-flex flex-column justify-content-center align-items-center">
+                <h2 class="p-3 text-info">We are coming soon!</h2>
+                {% with messages = get_flashed_messages(with_categories=True) %}
+                    {% if messages %}
+                        {% for cat,msg in messages %}
+                            {% if cat=='error' %}
+                                <p class="alert alert-danger">{{ msg }}</p>
+                            {% elif cat=='success' %}
+                                <p class="alert alert-success">{{ msg }}</p>
+                            {% else %}
+                                <p class="alert alert-primary">{{ msg }}</p>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <form method="post" class="w-50 p-5 bg-white">
+                    <div class="mb-3">
+                        <input class="form-control" type="email" name="email" placeholder="Subscribe to our newsletter">
+                    </div>
+                    <div class="mb-3">
+                        <p>How you do want us to contact you?</p>
+                        <label for="">
+                            <input type="checkbox" name="contact" value="email"> Email
+                        </label>
+                        <br>
+                        <label for="">
+                            <input type="checkbox" name="contact" value="call"> Call
+                        </label>
+                        <br>
+                        <label for="">
+                            <input type="checkbox" name="contact" value="sms"> SMS
+                        </label>
+                        <br>
+                        <label for="">
+                            <input type="checkbox" name="contact" value="fax"> Fax
+                        </label>
+                    </div>
+                    <div>
+                        <button class="btn btn-warning col-12">Notify Me!</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

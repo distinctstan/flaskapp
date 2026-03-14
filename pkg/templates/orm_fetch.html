@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlaskApp - Home</title>
+    {# <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css"> #}
+    <link rel="stylesheet" href="{{ url_for('static',filename='bootstrap/css/bootstrap.css') }}">
+</head>
+<body class="bg-secondary">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="border-bottom col-12 d-flex flex-column justify-content-center align-items-center">
+                <h1 class="p-4 text-light">Welcome to Flask App</h1>
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12 d-flex flex-column justify-content-center align-items-center">
+                <h2 class="text-light">ORM Fetch</h2>
+                <p class="text-light">Total Customers: {{ customers|count }}</p>
+                <table class="table table-light table-striped table-hover w-75">
+                    <tr>
+                        <th>ID</th>
+                        <th>NAME</th>
+                        <th>EMAIL</th>
+                        <th>PHONE</th>
+                        <th>DATE</th>
+                    </tr>
+                    {% for c in customers %}
+                        <tr>
+                            <td>{{ c.cust_id }}</td>
+                            <td>{{ c.cust_name }}</td>
+                            <td>{{ c.cust_email }}</td>
+                            <td>{{ c.cust_phone }}</td>
+                            <td>{{ c.cust_datereg }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <br>
+                <p class="text-light">Customers: {{ total }} </p>
+                {% for c in customers %}
+                    <p class="alert alert-info d-inline w-25">
+                        <a href="/get/customer/{{c.cust_id}}/">{{ c.cust_name }}</a><br>
+                        {{ c.cust_email }}<br>
+                        {{ c.cust_phone }}<br>
+                        {{ c.cust_datereg }}<br>
+                    </p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
